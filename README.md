@@ -63,7 +63,8 @@ With Istio and Kubernetes be able to launch some service(s) on localhost when al
 
 ##### Deploy all applications into cloud 
 -- TODO write scripts here
--- should be simple kubectl apply 
+-- should be simple kubectl apply
+- ```kubectl apply -f deployment/kubernetes/applications/a```
 
 ##### Validate all work in cloud
 -- TODO write scripts here
