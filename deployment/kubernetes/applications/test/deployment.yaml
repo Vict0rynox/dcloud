@@ -1,0 +1,30 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "curl-test"
+  labels:
+    app: "curl-test"
+spec:
+  selector:
+    matchLabels:
+      app: "curl-test"
+  revisionHistoryLimit: 10
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "curl-test"
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - imagePullPolicy: "IfNotPresent"
+          image: "curlimages/curl"
+          name: "curl-test"
+          command:
+            - sleep
+            - "3600"
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: "RollingUpdate"
