@@ -6,10 +6,7 @@ from flask import Flask
 
 app = Flask(__name__)
 
-ALLOWED_RELATED_SERVICES = {
-    'b': 'localhost:8081',
-    'c': 'localhost:8082'
-}
+ALLOWED_SERVICES = ['b', 'c']
 
 
 @app.route("/")
@@ -17,7 +14,7 @@ def health_check():
     return "Hi from a service"
 
 
-@app.route("/routes/<service_chain>")
+@app.route("/<service_chain>")
 def route_a(service_chain):
     root = {
         "a": f"hello from a"
@@ -28,16 +25,15 @@ def route_a(service_chain):
 
 def build_response(root_message, service_chain):
     services_responses = dict()
-    for service in service_chain:
-        for service_name in ALLOWED_RELATED_SERVICES.keys():
-            if service == service_name:
+    for requested_service in service_chain:
+        for service_name in ALLOWED_SERVICES:
+            if requested_service == service_name:
                 try:
-                    endpoint = ALLOWED_RELATED_SERVICES[service]
-                    response = requests.get(f'http://{endpoint}/routes/{service}')
+                    response = requests.get(f'http://{service_name}:8080/{service_name}')
                     s_rs = json.loads(response.text)
-                    services_responses[service] = s_rs[service]
+                    services_responses[service_name] = s_rs[service_name]
                 except:
-                    print(f"Error during calling service {service}. Check the connection or port")
+                    print(f"Error during calling service {requested_service}. Check the connection or port")
 
     return root_message | services_responses
 
