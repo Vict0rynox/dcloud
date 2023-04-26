@@ -41,7 +41,22 @@ With Istio and Kubernetes be able to launch some service(s) on localhost when al
 #### Development
 
 ##### Kubernetes/Minikube Istio setup 
--- TODO write scripts here
+- [historical issue, may be not relevant now](https://stackoverflow.com/questions/72073613/istio-installation-failed-apple-silicon-m1)
+- [install istioctl](https://istio.io/latest/docs/setup/install/istioctl/)
+- ```istioctl install``` ( I got docker pull issue from local docker desktop kubernetes, describe failed pod and pull image manually )
+- ```istioctl operator init --hub=ghcr.io/resf/istio```
+- ```
+  kubectl apply -f - <<EOF
+  apiVersion: install.istio.io/v1alpha1
+  kind: IstioOperator
+  metadata:
+    namespace: istio-system
+    name: example-istiocontrolplane
+  spec:
+    hub: ghcr.io/resf/istio
+    profile: demo
+  EOF
+- ```kubectl apply -f ${ISTIO_HOME}/samples/addons/```
 
 ##### Build docker images
 -- TODO write scripts here
