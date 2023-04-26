@@ -7,20 +7,20 @@ from flask import Flask
 app = Flask(__name__)
 
 ALLOWED_RELATED_SERVICES = {
-    'b': 'localhost:8081',
-    'c': 'localhost:8082'
+    'a': 'localhost:8080',
+    'b': 'localhost:8081'
 }
 
 
 @app.route("/")
 def health_check():
-    return "Hi from a service"
+    return "Hi from c service"
 
 
 @app.route("/routes/<service_chain>")
-def route_a(service_chain):
+def route_c(service_chain):
     root = {
-        "a": f"hello from a"
+        "c": f"hello from c"
     }
 
     return build_response(root, service_chain)
@@ -43,4 +43,4 @@ def build_response(root_message, service_chain):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=os.environ.get('listenport', 8080))
+    app.run(host='0.0.0.0', port=os.environ.get('listenport', 8082))
