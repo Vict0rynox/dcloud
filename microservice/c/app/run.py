@@ -1,41 +1,15 @@
-import json
 import os
 
-import requests
 from flask import Flask
 
 app = Flask(__name__)
 
-ALLOWED_SERVICES = ['a', 'b']
 
-
-@app.route("/")
-def health_check():
-    return "Hi from c service"
-
-
-@app.route("/<service_chain>")
-def route_c(service_chain):
-    root = {
-        "c": f"hello from c"
+@app.route("/c")
+def c():
+    return {
+        "c": "hello from c"
     }
-
-    return build_response(root, service_chain)
-
-
-def build_response(root_message, service_chain):
-    services_responses = dict()
-    for requested_service in service_chain:
-        for service_name in ALLOWED_SERVICES:
-            if requested_service == service_name:
-                try:
-                    response = requests.get(f'http://{service_name}:8080/{service_name}')
-                    s_rs = json.loads(response.text)
-                    services_responses[service_name] = s_rs[service_name]
-                except:
-                    print(f"Error during calling service {requested_service}. Check the connection or port")
-
-    return root_message | services_responses
 
 
 if __name__ == "__main__":
