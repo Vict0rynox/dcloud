@@ -6,6 +6,10 @@ from flask import Flask
 
 app = Flask(__name__)
 
+rs = {
+    "b": "hello from b"
+}
+
 
 @app.route("/b")
 def b():
@@ -18,9 +22,7 @@ def b():
 def bc():
     response = requests.get('http://c:8080/c')
     s_rs = json.loads(response.text)
-    return {
-        "b": "hello from b"
-    } | s_rs
+    return {**rs, **s_rs}
 
 
 if __name__ == "__main__":
