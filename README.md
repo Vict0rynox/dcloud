@@ -59,12 +59,14 @@ With Istio and Kubernetes be able to launch some service(s) on localhost when al
 - ```kubectl apply -f ${ISTIO_HOME}/samples/addons/```
 
 ##### Build docker images
--- TODO write scripts here
+-- in each service Dockerfile folder run
+-- ```docker build -t a .```
+-- ```docker build -t b .```
+-- ```docker build -t c .```
 
 ##### Deploy all applications into cloud 
--- TODO write scripts here
--- should be simple kubectl apply
-- ```kubectl apply -f deployment/kubernetes/applications/a```
+-- for each service run
+- ```kubectl apply -f deployment/kubernetes/applications/a/deployment.yaml```
 
 ##### Validate all work in cloud
 -- TODO write scripts here
