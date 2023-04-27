@@ -40,6 +40,7 @@ With Istio and Kubernetes be able to launch some service(s) on localhost when al
 
 #### Development
 
+
 ##### Kubernetes/Minikube Istio setup 
 - [historical issue, may be not relevant now](https://stackoverflow.com/questions/72073613/istio-installation-failed-apple-silicon-m1)
 - [install istioctl](https://istio.io/latest/docs/setup/install/istioctl/)
@@ -59,14 +60,34 @@ With Istio and Kubernetes be able to launch some service(s) on localhost when al
 - ```kubectl apply -f ${ISTIO_HOME}/samples/addons/```
 
 ##### Build docker images
--- in each service Dockerfile folder run
--- ```docker build -t a .```
--- ```docker build -t b .```
--- ```docker build -t c .```
+- ```cd images/bastion && docker build -t bastion . && cd ../..```
+- ```cd microservice/a && docker build -t a . && cd ../..```
+- ```cd microservice/b && docker build -t b . && cd ../..```
+- ```cd microservice/c && docker build -t c . && cd ../..```
 
-##### Deploy all applications into cloud 
--- for each service run
-- ```kubectl apply -f deployment/kubernetes/applications/a/deployment.yaml```
+##### Deploy applications into cloud
+- ```kubectl apply -f deployment/kubernetes/applications/a/```
+- ```kubectl apply -f deployment/kubernetes/applications/b/```
+- ```kubectl apply -f deployment/kubernetes/applications/c/```
+
+##### Deploy bastion tools into cloud
+### TODO dkuzkin how to put public ssh key into deployment
+- ```kubectl apply -f deployment/kubernetes/dcloud/```
+
+##### Usage of bastion tools
+###### Allow incoming requests from kubernetes bastion reverse-ssh pod to localhost
+###### terminal 1
+- ```kubectl port-forward svc/dcloud-app-user-1 2222```
+###### terminal 2
+- ```ssh -p 2222 -N -R 9000:127.0.0.1:8080 admin@127.0.0.1```
+###### simple validate we are able to connect to localhost from kubernetes
+- Run microservice/a/app/run.py 
+- ```kubectl apply -f deployment/kubernetes/applications/test```
+- ```kubectl exec -it $(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep curl-test) -c curl-test curl http://dcloud-app-user-1:9000/a```
+
+###### Allow outcoming requests from localhost to bastion proxy pod
+# TODO otyschenko
+- ```kubectl port-forward svc/dcloud-app-user-1 2221```
 
 ##### Validate all work in cloud
 -- TODO write scripts here
