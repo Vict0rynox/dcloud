@@ -1,18 +1,18 @@
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
-  name: "dcloud-app-user-1"
+  name: "dcloud-app-user-2"
   labels:
-    app: "dcloud-app-user-1"
+    app: "dcloud-app-user-2"
 spec:
   selector:
     matchLabels:
-      app: "dcloud-app-user-1"
+      app: "dcloud-app-user-2"
   replicas: 1
   template:
     metadata:
       labels:
-        app: "dcloud-app-user-1"
+        app: "dcloud-app-user-2"
         sidecar.istio.io/inject: "true"
     spec:
       containers:
@@ -23,7 +23,7 @@ spec:
               containerPort: 2222
             - name: "http"
               containerPort: 8080
-          name: "dcloud-app-user-1"
+          name: "dcloud-app-user-2"
           env:
             - name: PUID
               value: "1000"

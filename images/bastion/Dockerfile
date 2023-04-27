@@ -1,6 +1,6 @@
 FROM lscr.io/linuxserver/openssh-server:latest
 
-EXPOSE 9000
+EXPOSE 8080
 
 RUN apk add --no-cache vim curl
 

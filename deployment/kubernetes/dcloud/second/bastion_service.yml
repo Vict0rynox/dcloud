@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: dcloud-app-user-1
+  name: dcloud-app-user-2
 spec:
   selector:
-    app: dcloud-app-user-1
+    app: dcloud-app-user-2
   ports:
     - name: ssh
       port: 2222
