@@ -85,8 +85,11 @@ With Istio and Kubernetes be able to launch some service(s) on localhost when al
 - ```kubectl apply -f deployment/kubernetes/applications/test```
 - ```kubectl exec -it $(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep curl-test) -c curl-test curl http://dcloud-app-user-1:9000/a```
 
-###### Allow outcoming requests from localhost to bastion proxy pod
-# TODO otyschenko
+#### Allow outcoming requests from localhost to bastion proxy pod
+- /etc/hosts should be enriched with istio services to be routed on localhost ( this is more simple than use Dnsmasq, anyway sudo required )
+- [retrieve list of istio registered services](/scripts/istio_services_list.sh)
+- execute ```sudo vi /etc/hosts``` and add all istio registered services
+- TODO otyschenko
 - ```kubectl port-forward svc/dcloud-app-user-1 2221```
 
 ##### Validate all work in cloud
