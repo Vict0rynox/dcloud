@@ -40,6 +40,10 @@ With Istio and Kubernetes be able to launch some service(s) on localhost when al
 
 #### Development
 
+##### Prerequisites
+- Required environment variables
+```DCLOUD_PUBLIC_KEY```
+```DCLOUD_USER_EMAIL```
 
 ##### Kubernetes/Minikube Istio setup 
 - [historical issue, may be not relevant now](https://stackoverflow.com/questions/72073613/istio-installation-failed-apple-silicon-m1)
@@ -89,6 +93,10 @@ With Istio and Kubernetes be able to launch some service(s) on localhost when al
 - /etc/hosts should be enriched with istio services to be routed on localhost ( this is more simple than use Dnsmasq, anyway sudo required )
 - [retrieve list of istio registered services](/scripts/istio_services_list.sh)
 - execute ```sudo vi /etc/hosts``` and add all istio registered services
+- ```cd images/bastion-ingress-proxy && docker build -t bastion-ingress-proxy . && cd ../..```
+- TODO dkuzkin kubectl apply for bastion-ingress-proxy
+- TODO dkuzkin curl example
+  kubectl exec -it $(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep curl-test) -c curl-test curl -H "HOST: google.com" http://bastion-ingress-proxy:8080
 - TODO otyschenko
 - ```kubectl port-forward svc/dcloud-app-user-1 2221```
 

@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  bastion-ingress-proxy:
+    image: bastion-ingress-proxy:latest
+    container_name: bastion-ingress-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./logs:/var/log/nginx
+    restart: unless-stopped

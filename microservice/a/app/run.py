@@ -7,7 +7,7 @@ from flask import Flask
 app = Flask(__name__)
 
 rs = {
-    "a": "hello from second local a"
+    "a": "hello from a"
 }
 
 
@@ -31,4 +31,4 @@ def abc():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=os.environ.get('listenport', 3001))
+    app.run(host='0.0.0.0', port=os.environ.get('listenport', 8080))
