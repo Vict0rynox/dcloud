@@ -2,7 +2,7 @@ import json
 import os
 
 import requests
-from flask import Flask
+from flask import Flask, request
 
 app = Flask(__name__)
 
@@ -18,14 +18,14 @@ def a():
 
 @app.route("/ab")
 def ab():
-    response = requests.get('http://b:8080/b')
+    response = requests.get('http://b:8080/b', headers={"x-user-email": request.headers.get("x-user-email")})
     s_rs = json.loads(response.text)
     return {**rs, **s_rs}
 
 
 @app.route("/abc")
 def abc():
-    response_b = requests.get('http://b:8080/bc')
+    response_b = requests.get('http://b:8080/bc', headers={"x-user-email": request.headers.get("x-user-email")})
     s_rs_bc = json.loads(response_b.text)
     return {**rs, **s_rs_bc}
 

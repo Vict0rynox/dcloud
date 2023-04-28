@@ -8,11 +8,11 @@ spec:
   http:
   - match:
     - headers:
-        user-email:
+        x-user-email:
           exact: "$DCLOUD_USER_EMAIL"
     route:
     - destination:
-        host: "dcloud-bastion-$DCLOUD_USER"
+        host: "dcloud-bastion-egress-$DCLOUD_USER"
   - route:
     - destination:
         host: "$DCLOUD_ISTIO_SERVICE_NAME"
