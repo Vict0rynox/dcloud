@@ -9,8 +9,14 @@ function cleanup {
 
 trap cleanup INT
 
+echo "Dcloud step 1, port-forward to dcloud-bastion-egress-$1"
 kubectl port-forward svc/dcloud-bastion-egress-$1 2222 &
+echo "await 10 seconds to establish port-forward for next reverse ssh"
+sleep 10
+echo "Dcloud step 2, reverse proxy from dcloud-bastion-egress-$1 to localhost"
 ssh -p 2222 -N -R 8080:localhost:18080 admin@localhost &
+sleep 1
+echo "Dcloud step 3, port-forward to dcloud-bastion-ingress-$1"
 kubectl port-forward svc/dcloud-bastion-ingress-$1 8080:80 &
 
 echo "Dcloud started, press ctrl+c to quite"
