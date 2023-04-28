@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: "dcloud-balancer-$DCLOUD_USER"
+spec:
+  hosts:
+  - "$DCLOUD_ISTIO_SERVICE_NAME"
+  http:
+  - match:
+    - headers:
+        user-email:
+          exact: "$DCLOUD_USER_EMAIL"
+    route:
+    - destination:
+        host: "dcloud-bastion-$DCLOUD_USER"
+  - route:
+    - destination:
+        host: "$DCLOUD_ISTIO_SERVICE_NAME"
