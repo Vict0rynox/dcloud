@@ -48,7 +48,6 @@ Start microservice(s) on localhost when all others are in Kubernetes(communicati
 - `DCLOUD_USER_EMAIL`
   - code sample  
   - `export DCLOUD_USER_EMAIL="youremail@gmail.com"`
-  - `export DCLOUD_USER_EMAIL="dmitriy.kuzkin@gmail.com"`
 
 ### Build docker images
 - ```cd images/bastion-egress-proxy && docker build -t bastion-egress-proxy . && cd ../..```
