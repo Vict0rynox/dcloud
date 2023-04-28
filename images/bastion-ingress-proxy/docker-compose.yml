@@ -1,11 +1,14 @@
 version: '3'
 
+# this is for local verifications(need to add grpc, jdbc ... )
 services:
   bastion-ingress-proxy:
-    image: bastion-ingress-proxy:latest
+#    image: nginx:latest
+    image: arm64v8/nginx:latest
     container_name: bastion-ingress-proxy
     ports:
-      - "80:80"
+      - "9080:80"
     volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
       - ./logs:/var/log/nginx
     restart: unless-stopped
