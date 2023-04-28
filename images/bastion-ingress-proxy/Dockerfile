@@ -1,15 +1,20 @@
-ARG ARCH
-FROM alpine AS builder
-RUN echo "Building for ${ARCH}"
+# Use an official Python runtime as a parent image
+FROM python:3.8-slim-buster
 
-FROM builder AS arm64v8
-RUN echo "Building for arm64"
-FROM arm64v8/nginx:latest
+# Set the working directory to /app
+WORKDIR /app
 
-FROM builder AS amd64
-RUN echo "Building for amd64"
-FROM nginx:latest
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-COPY nginx.conf /etc/nginx/nginx.conf
+# Install any needed packages specified in requirements.txt
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
+# Make port 80 available to the world outside this container
 EXPOSE 80
+
+# Define environment variable
+ENV NAME World
+
+# Run app.py when the container launches
+CMD ["python", "app/run.py"]
