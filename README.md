@@ -97,6 +97,10 @@ With Istio and Kubernetes be able to launch some service(s) on localhost when al
 - TODO dkuzkin kubectl apply for bastion-ingress-proxy
 - TODO dkuzkin curl example
   kubectl exec -it $(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep curl-test) -c curl-test curl -H "HOST: google.com" http://bastion-ingress-proxy:8080
+- 
+- kubectl exec -it $(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep bastion-ingress-proxy) -c bastion-ingress-proxy /bin/sh
+- 
+- curl -H "HOST: google.com" http://bastion-ingress-proxy:8080
 - TODO otyschenko
 - ```kubectl port-forward svc/dcloud-app-user-1 2221```
 
