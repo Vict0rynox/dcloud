@@ -23,3 +23,4 @@ echo "Dcloud started, press ctrl+c to quite"
 wait %1 %2 %3
 
 cleanup
+kubectl port-forward svc/dcloud-bastion-egress-vvasyliev-66c6c98697-l7l6x 2222

@@ -67,8 +67,10 @@ Start microservice(s) on localhost when all others are in Kubernetes(communicati
 - change ["hello from b"](microservice/b/app/run.py#L10) to "LOCAL b"
 - change [8080](microservice/b/app/run.py#L27) to 18080
 - start locally microservice 'b'
-  - `pip install --trusted-host pypi.python.org -r microservice/b/requirements.txt`
-  - `python microservice/b/app/run.py` 
+  - `python3 -m venv microservice/b/.venv`
+  - `source microservice/b/.venv/bin/activate`
+  - `python3 -m pip install --trusted-host pypi.python.org -r microservice/b/requirements.txt`
+  - `python3 microservice/b/app/run.py` 
 - `python scripts/register.py b` (where `b` is istio registered microservice)
 - that's all, upper script register microservice 'b' running on local and we can validate all flow
 

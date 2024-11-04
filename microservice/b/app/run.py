@@ -7,7 +7,7 @@ from flask import Flask, request
 app = Flask(__name__)
 
 rs = {
-    "b": "hello from b"
+    "b": "LOCAL b"
 }
 
 
@@ -24,4 +24,4 @@ def bc():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=os.environ.get('listenport', 8080))
+    app.run(host='0.0.0.0', port=os.environ.get('listenport', 18080))
