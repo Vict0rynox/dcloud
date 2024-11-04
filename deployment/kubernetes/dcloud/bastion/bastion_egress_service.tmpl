@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: dcloud-app-user-1
+  name: "dcloud-bastion-egress-$DCLOUD_USER"
 spec:
   selector:
-    app: dcloud-app-user-1
+    app: "dcloud-bastion-egress-$DCLOUD_USER"
   ports:
     - name: ssh
       port: 2222
       targetPort: 2222
       protocol: TCP
-    - name: http
-      port: 9000
-      targetPort: 9000
+    - name: http-out
+      port: 8080
+      targetPort: 8080
       protocol: TCP

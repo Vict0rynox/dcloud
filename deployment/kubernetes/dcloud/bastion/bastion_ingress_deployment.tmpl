@@ -1,0 +1,24 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: dcloud-bastion-ingress-$DCLOUD_USER
+  labels:
+    app: dcloud-bastion-ingress-$DCLOUD_USER
+spec:
+  selector:
+    matchLabels:
+      app: dcloud-bastion-ingress-$DCLOUD_USER
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dcloud-bastion-ingress-$DCLOUD_USER
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - name: "bastion-ingress-proxy"
+          image: "bastion-ingress-proxy:latest"
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - name: "http"
+              containerPort: 80

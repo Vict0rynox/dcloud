@@ -1,0 +1,11 @@
+[workspace]
+resolver = "1"
+members = [
+    "dcloud-cli",
+    "dcloud-operator",
+    "dcloud-bastion-egress",
+    "dcloud-bastion-ingress"
+]
+
+[workspace.dependencies]
+tokio = { version = "1.38.0", features = ["full"] }

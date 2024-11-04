@@ -1,0 +1,43 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: dcloud-bastion-egress-$DCLOUD_USER
+  labels:
+    app: dcloud-bastion-egress-$DCLOUD_USER
+spec:
+  selector:
+    matchLabels:
+      app: dcloud-bastion-egress-$DCLOUD_USER
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dcloud-bastion-egress-$DCLOUD_USER
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - name: "bastion-egress-proxy"
+          image: "bastion-egress-proxy:latest"
+          ports:
+            - name: "ssh"
+              containerPort: 2222
+            - name: "http"
+              containerPort: 8080
+          imagePullPolicy: "IfNotPresent"
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "Etc/UTC"
+            - name: SUDO_ACCESS
+              value: "true"
+            - name: PASSWORD_ACCESS
+              value: "true"
+            - name: USER_NAME
+              value: "admin"
+            - name: USER_PASSWORD
+              value: "admin"
+            - name: PUBLIC_KEY
+              value: $DCLOUD_PUBLIC_KEY
